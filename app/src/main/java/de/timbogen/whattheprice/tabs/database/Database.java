@@ -78,7 +78,7 @@ public class Database extends SQLiteOpenHelper {
      * @param folder to be added
      * @return true if the folder was added successfully
      */
-    long addFolder(Folder folder) {
+    public long addFolder(Folder folder) {
         SQLiteDatabase db = getWritableDatabase();
 
         // Create the value pairs

@@ -109,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         // Load the data
         folders = db.getFolders();
+        // Check if there is no folder yet
+        if (folders.size() == 0) {
+            // Add the default folder
+            Folder folder = new Folder(getString(R.string.default_directory), getString(R.string.default_directory_description));
+            folders.add(folder);
+            folder.id = db.addFolder(folder);
+            // Set the folder as selected
+            selectedFolderID = folder.id;
+            saveState();
+        }
     }
 
     /**
@@ -118,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            saveState();
             updateLayout();
         }
     }
@@ -136,10 +147,10 @@ public class MainActivity extends AppCompatActivity {
         spinnerFolders.setAdapter(adapterFolders);
 
         // Set the selection
-            int index = Folder.findFolder(folders, selectedFolderID);
-            if (index != -1) {
-                spinnerFolders.setSelection(index);
-            }
+        int index = Folder.findFolder(folders, selectedFolderID);
+        if (index != -1) {
+            spinnerFolders.setSelection(index);
+        }
 
         // Update the layout of the fragments
         updateFragments();
@@ -226,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
         db.deleteFolder(selectedFolderID);
         folders.remove(Folder.findFolder(folders, selectedFolderID));
         selectedFolderID = folders.get(0).id;
+        saveState();
         updateLayout();
     }
 

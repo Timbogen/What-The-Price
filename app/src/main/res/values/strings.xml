@@ -3,6 +3,8 @@
     <!-- App name -->
     <string name="app_name">What The Price</string>
     <string name="image"> Image </string>
+    <string name="default_directory"> Default </string>
+    <string name="default_directory_description"> This is the default folder. </string>
 
     <!-- Menu -->
     <string name="folder_spinner"> Folder Spinner </string>
