@@ -1,6 +1,7 @@
 package de.timbogen.whattheprice;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -78,9 +79,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Load data
         restoreState();
         loadData();
+
+        // Setup the UI
         setupPager();
+        setupToolbar();
+    }
+
+    /**
+     * Method to setup the toolbar
+     */
+    private void setupToolbar() {
+        if (getSupportActionBar() != null) {
+            // Set the icon
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setCustomView(R.layout.toolbar);
+
+            // Setup the spinner
+            spinnerFolders = getSupportActionBar().getCustomView().findViewById(R.id.spinner_folders);
+            updateLayout();
+        }
     }
 
     /**
@@ -130,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             saveState();
             updateLayout();
+            updateFragments();
         }
     }
 
@@ -151,9 +173,6 @@ public class MainActivity extends AppCompatActivity {
         if (index != -1) {
             spinnerFolders.setSelection(index);
         }
-
-        // Update the layout of the fragments
-        updateFragments();
     }
 
     /**
@@ -171,10 +190,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
-        // Setup the spinner
-        spinnerFolders = (Spinner) menu.findItem(R.id.spinner_folders).getActionView();
-        updateLayout();
 
         // Add an item selected event
         spinnerFolders.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -239,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
         selectedFolderID = folders.get(0).id;
         saveState();
         updateLayout();
+        updateFragments();
     }
 
     /**
@@ -256,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(new PagerAdapter(getSupportFragmentManager(), this));
         TabLayout layout = findViewById(R.id.tab_layout);
         layout.setupWithViewPager(pager);
-
     }
 
     /**

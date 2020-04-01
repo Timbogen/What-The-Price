@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".tabs.database.NewItemActivity">
 
+    <View
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/toolbar_shadow"/>
+
     <ImageView
         android:layout_margin="16dp"
         android:contentDescription="@string/image"
@@ -40,6 +47,7 @@
         android:layout_margin="16dp"
         android:hint="@string/item_name_hint"
         android:inputType="none"
+        android:maxLength="25"
         app:layout_constraintTop_toBottomOf="@id/spinner_type"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
