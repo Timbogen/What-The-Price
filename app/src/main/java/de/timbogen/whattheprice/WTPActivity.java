@@ -48,6 +48,14 @@ public class WTPActivity extends AppCompatActivity {
      */
     public static long selectedFolderID = -1;
     /**
+     * The items shown in the list
+     */
+    public ArrayList<Item> drinks;
+    /**
+     * The items shown in the list
+     */
+    public ArrayList<Item> food;
+    /**
      * The current order
      */
     public static ArrayList<Item> order = new ArrayList<>();
@@ -58,15 +66,15 @@ public class WTPActivity extends AppCompatActivity {
     /**
      * The overview fragment
      */
-    private OverviewFragment overview;
+    private OverviewFragment overviewFragment = new OverviewFragment(this, db);
     /**
      * The drinks fragment
      */
-    private ItemsFragment drinks;
+    private ItemsFragment drinksFragment = new ItemsFragment(this, db, Type.DRINK);
     /**
      * The food fragment
      */
-    private ItemsFragment food;
+    private ItemsFragment foodFragment = new ItemsFragment(this, db, Type.FOOD);
     /**
      * Spinner containing the folders
      */
@@ -140,6 +148,16 @@ public class WTPActivity extends AppCompatActivity {
             selectedFolderID = folder.id;
             saveState();
         }
+        loadItems();
+    }
+
+    /**
+     * Method to load all the items
+     */
+    private void loadItems() {
+        clearOrder(false);
+        drinks = db.getItems(selectedFolderID, Type.DRINK.ordinal());
+        food = db.getItems(selectedFolderID, Type.FOOD.ordinal());
     }
 
     /**
@@ -177,13 +195,11 @@ public class WTPActivity extends AppCompatActivity {
 
     /**
      * Method to update the fragments
-     *
-     * @param reload true if data should also be reloaded
      */
-    public void updateFragments(boolean reload) {
-        overview.update();
-        drinks.update(reload);
-        food.update(reload);
+    public void updateFragments() {
+        drinksFragment.update();
+        foodFragment.update();
+        overviewFragment.update();
     }
 
     /**
@@ -202,7 +218,8 @@ public class WTPActivity extends AppCompatActivity {
                 // Get the id
                 selectedFolderID = folders.get(position).id;
                 saveState();
-                clearOrder(false);
+                loadItems();
+                updateFragments();
             }
 
             @Override
@@ -231,6 +248,7 @@ public class WTPActivity extends AppCompatActivity {
 
             case R.id.clear_order:
                 clearOrder(true);
+                updateFragments();
                 return true;
 
             default:
@@ -259,6 +277,7 @@ public class WTPActivity extends AppCompatActivity {
             saveState();
             updateLayout();
             clearOrder(false);
+            updateFragments();
         } else {
             Toast.makeText(this, getString(R.string.delete_folder_error2), Toast.LENGTH_SHORT).show();
         }
@@ -279,8 +298,6 @@ public class WTPActivity extends AppCompatActivity {
         }
         // Empty the order
         order.clear();
-        // Update fragments
-        updateFragments(true);
     }
 
     /**
@@ -288,7 +305,7 @@ public class WTPActivity extends AppCompatActivity {
      */
     private void setupPager() {
         ViewPager pager = findViewById(R.id.pager);
-        pager.setAdapter(new PagerAdapter(getSupportFragmentManager(), this));
+        pager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         TabLayout layout = findViewById(R.id.tab_layout);
         layout.setupWithViewPager(pager);
     }
@@ -297,20 +314,13 @@ public class WTPActivity extends AppCompatActivity {
      * Class for setting up the view pager
      */
     private class PagerAdapter extends FragmentPagerAdapter {
-
-        /**
-         * The current activity
-         */
-        private WTPActivity activity;
-
         /**
          * Constructor
          *
          * @param fm the fragment manager
          */
-        private PagerAdapter(@NonNull FragmentManager fm, WTPActivity activity) {
+        private PagerAdapter(@NonNull FragmentManager fm) {
             super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-            this.activity = activity;
         }
 
         /**
@@ -331,16 +341,13 @@ public class WTPActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    drinks = new ItemsFragment(activity, db, Type.DRINK);
-                    return drinks;
+                    return drinksFragment;
 
                 case 2:
-                    food = new ItemsFragment(activity, db, Type.FOOD);
-                    return food;
+                    return foodFragment;
 
                 default:
-                    overview = new OverviewFragment(activity, db);
-                    return overview;
+                    return overviewFragment;
             }
         }
 

@@ -34,10 +34,6 @@ public class ItemsFragment extends Fragment {
      */
     private WTPActivity activity;
     /**
-     * The items shown in the list
-     */
-    private ArrayList<Item> items;
-    /**
      * The type of item
      */
     private Type type;
@@ -54,7 +50,7 @@ public class ItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment =  inflater.inflate(R.layout.fragment_items, container, false);
-        update(true);
+        update();
         return fragment;
     }
 
@@ -65,33 +61,14 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            update(true);
+            update();
         }
     }
 
     /**
      * Method to update the fragment
-     *
-     * @param reload true if data should also be reloaded
      */
-    public void update(boolean reload) {
-        if (reload) {
-            loadData();
-        }
-        setupLayout();
-    }
-
-    /**
-     * Method to load the data
-     */
-    private void loadData() {
-        items = db.getItems(WTPActivity.selectedFolderID, type.ordinal());
-    }
-
-    /**
-     * Method to setup the fragments layout
-     */
-    private void setupLayout() {
+    public void update() {
         // Add an action to the add button
         fragment.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +79,7 @@ public class ItemsFragment extends Fragment {
 
         // Fill the list
         ListView list = fragment.findViewById(R.id.list);
+        ArrayList<Item> items = type == Type.DRINK ? activity.drinks : activity.food;
         list.setAdapter(new ItemAdapter(activity, items, db));
     }
 

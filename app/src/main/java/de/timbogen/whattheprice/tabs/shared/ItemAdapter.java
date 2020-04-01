@@ -121,7 +121,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         // Update the item
         db.updateItem(item);
         // Refresh the fragments
-        activity.updateFragments(false);
+        activity.updateFragments();
     }
 
     /**
@@ -142,6 +142,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         // Update the item
         db.updateItem(item);
         // Refresh the fragments
-        activity.updateFragments(false);
+        activity.updateFragments();
     }
 }

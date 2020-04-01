@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.R;
 import de.timbogen.whattheprice.tabs.database.Database;

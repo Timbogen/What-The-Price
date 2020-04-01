@@ -34,7 +34,6 @@ public class ItemDetailActivity extends AppCompatActivity {
      * Method to setup the layout
      */
     private void setupLayout() {
-        System.out.println(item.name);
         // The name
         TextView name = findViewById(R.id.name);
         name.setText(item.name);
