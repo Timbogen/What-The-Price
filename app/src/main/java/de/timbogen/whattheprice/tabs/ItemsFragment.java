@@ -20,7 +20,7 @@ import de.timbogen.whattheprice.tabs.models.Item;
 import de.timbogen.whattheprice.tabs.models.Type;
 import de.timbogen.whattheprice.tabs.shared.ItemAdapter;
 
-public class DrinksFragment extends Fragment {
+public class ItemsFragment extends Fragment {
     /**
      * The database
      */
@@ -37,18 +37,23 @@ public class DrinksFragment extends Fragment {
      * The items shown in the list
      */
     private ArrayList<Item> items;
+    /**
+     * The type of item
+     */
+    private Type type;
 
     /**
      * Constructor
      */
-    public DrinksFragment(Activity activity, Database db) {
+    public ItemsFragment(Activity activity, Database db, Type type) {
         this.activity = activity;
         this.db = db;
+        this.type = type;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        fragment =  inflater.inflate(R.layout.fragment_drinks, container, false);
+        fragment =  inflater.inflate(R.layout.fragment_items, container, false);
         update();
         return fragment;
     }
@@ -76,7 +81,7 @@ public class DrinksFragment extends Fragment {
      * Method to load the data
      */
     private void loadData() {
-        items = db.getItems(MainActivity.selectedFolderID, Type.DRINK.ordinal());
+        items = db.getItems(MainActivity.selectedFolderID, type.ordinal());
     }
 
     /**
@@ -99,7 +104,7 @@ public class DrinksFragment extends Fragment {
      * Method to start the new item activity
      */
     private void newItem() {
-        NewItemActivity.type = Type.DRINK;
+        NewItemActivity.type = type;
         startActivityForResult(new Intent(activity, NewItemActivity.class), 0);
     }
 }

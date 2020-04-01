@@ -1,10 +1,12 @@
 package de.timbogen.whattheprice.tabs.shared;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,23 +25,23 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     /**
      * The active context
      */
-    private Context context;
+    private Activity activity;
 
     /**
      * Constructor
      */
-    public ItemAdapter(@NonNull Context context, ArrayList<Item> items) {
-        super(context, 0, items);
-        this.context = context;
+    public ItemAdapter(@NonNull Activity activity, ArrayList<Item> items) {
+        super(activity, 0, items);
+        this.activity = activity;
         this.items = items;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View item, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View item, @NonNull ViewGroup parent) {
         // Get the layout
         if (item == null) {
-            item = LayoutInflater.from(context).inflate(R.layout.adapter_item, parent, false);
+            item = LayoutInflater.from(activity).inflate(R.layout.adapter_item, parent, false);
         }
 
         // Set the name
@@ -55,6 +57,18 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView quantity = item.findViewById(R.id.quantity);
         String quantityText = Integer.toString(items.get(position).quantity);
         quantity.setText(quantityText);
+
+        // Set the on click method for info button
+        ImageView info = item.findViewById(R.id.info);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set the item
+                ItemDetailActivity.item = items.get(position);
+                // Start the activity for result
+                activity.startActivityForResult(new Intent(activity, ItemDetailActivity.class), 0);
+            }
+        });
 
         // Return the modified item
         return item;

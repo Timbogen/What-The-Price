@@ -39,7 +39,7 @@ public class OverviewFragment extends Fragment {
         // Get the current folder
         Folder folder = MainActivity.folders.get(Folder.findFolder(MainActivity.folders, MainActivity.selectedFolderID));
         // Set the description
-        TextView description = fragment.findViewById(R.id.folder_description);
+        TextView description = fragment.findViewById(R.id.price);
         if (folder.description.equals("")) {
             description.setText(getString(R.string.overview_no_description));
         } else {

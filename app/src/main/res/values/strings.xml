@@ -43,16 +43,26 @@
         <item> Add to food </item>
     </string-array>
 
+    <!-- Detailed item activity -->
+    <string name="detailed_title"> Detailed item view </string>
+    <string name="detailed_delete_success"> Item was deleted successfully! </string>
+    <string name="detailed_delete_error"> Error! Could not delete item! </string>
+    <string name="detailed_price"> Price per unit </string>
+    <string name="detailed_price_unit"> € </string>
+    <string name="detailed_quantity"> Quantity </string>
+    <string name="detailed_ingredients"> Ingredients </string>
+    <string name="detailed_no_ingredients"> No ingredients given. </string>
+
     <!-- Overview fragment -->
     <string name="overview_folder_description"> Description </string>
     <string name="overview_no_description"> No description </string>
     <string name="overview_folder_order"> Order </string>
     <string name="overview_total"> Total: </string>
-    <string name="overview_euro"> Euro </string>
+    <string name="overview_euro"> € </string>
 
     <!-- Item adapter -->
     <string name="item_adapter_quantity"> Quantity: </string>
     <string name="item_adapter_price"> Price: </string>
-    <string name="item_adapter_price_unit"> Euro </string>
+    <string name="item_adapter_price_unit"> € </string>
 
 </resources>

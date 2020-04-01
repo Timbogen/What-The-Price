@@ -52,11 +52,10 @@ public class NewFolderActivity extends AppCompatActivity {
             MainActivity.folders.add(folder);
             MainActivity.selectedFolderID = folder.id;
             Toast.makeText(this, getString(R.string.folder_add_success), Toast.LENGTH_LONG).show();
-            finish();
         } else {
             Toast.makeText(this, getString(R.string.folder_add_error), Toast.LENGTH_LONG).show();
-            cancel(null);
         }
+        finish();
     }
 
     /**
@@ -65,9 +64,6 @@ public class NewFolderActivity extends AppCompatActivity {
      * @param view that was clicked
      */
     public void cancel(View view) {
-        setResult(Activity.RESULT_CANCELED, null);
         finish();
     }
-
-
 }

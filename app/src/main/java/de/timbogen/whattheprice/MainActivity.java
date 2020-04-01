@@ -26,13 +26,13 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-import de.timbogen.whattheprice.tabs.DrinksFragment;
-import de.timbogen.whattheprice.tabs.FoodFragment;
+import de.timbogen.whattheprice.tabs.ItemsFragment;
 import de.timbogen.whattheprice.tabs.OverviewFragment;
 import de.timbogen.whattheprice.tabs.database.Database;
 import de.timbogen.whattheprice.tabs.database.NewFolderActivity;
 import de.timbogen.whattheprice.tabs.models.Folder;
 import de.timbogen.whattheprice.tabs.models.Item;
+import de.timbogen.whattheprice.tabs.models.Type;
 
 public class MainActivity extends AppCompatActivity {
     /**
@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The drinks fragment
      */
-    private DrinksFragment drinks;
+    private ItemsFragment drinks;
     /**
      * The food fragment
      */
-    private FoodFragment food;
+    private ItemsFragment food;
     /**
      * Spinner containing the folders
      */
@@ -317,11 +317,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    drinks = new DrinksFragment(activity, db);
+                    drinks = new ItemsFragment(activity, db, Type.DRINK);
                     return drinks;
 
                 case 2:
-                    food = new FoodFragment(activity, db);
+                    food = new ItemsFragment(activity, db, Type.FOOD);
                     return food;
 
                 default:
