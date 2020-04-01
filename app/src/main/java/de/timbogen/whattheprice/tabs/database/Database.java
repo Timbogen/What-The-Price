@@ -124,7 +124,11 @@ public class Database extends SQLiteOpenHelper {
         ArrayList<Folder> folders = new ArrayList<>();
 
         // Create the query
-        Cursor cursor = db.rawQuery("SELECT * FROM " + FOLDER_TABLE, null);
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + FOLDER_TABLE
+                        + " ORDER BY " + Folder.NAME + " ASC",
+                null
+        );
 
         // Check if the cursor is valid
         if (!cursor.moveToFirst()) {
@@ -163,7 +167,8 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM " + ITEM_TABLE
                         + " WHERE " + Item.FOLDER_ID + "=" + folder_id
-                        + " AND " + Item.TYPE + "=" + type,
+                        + " AND " + Item.TYPE + "=" + type
+                        + " ORDER BY " + Item.NAME + " ASC",
                 null
         );
 

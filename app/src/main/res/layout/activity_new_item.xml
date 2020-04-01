@@ -46,7 +46,7 @@
         android:id="@+id/text_name"
         android:layout_margin="16dp"
         android:hint="@string/item_name_hint"
-        android:inputType="none"
+        android:inputType="textCapWords"
         android:maxLength="25"
         app:layout_constraintTop_toBottomOf="@id/spinner_type"
         app:layout_constraintLeft_toLeftOf="parent"

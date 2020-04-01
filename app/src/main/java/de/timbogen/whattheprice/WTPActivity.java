@@ -274,6 +274,7 @@ public class WTPActivity extends AppCompatActivity {
             // Reset the quantities
             for (Item item: order) {
                 item.quantity = 0;
+                db.updateItem(item);
             }
         }
         // Empty the order
