@@ -179,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
      * Method to update the fragments
      */
     private void updateFragments() {
-        overview.setupLayout();
+        overview.update();
+        drinks.update();
+        food.update();
     }
 
     /**
@@ -249,12 +251,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.delete_folder_error), Toast.LENGTH_LONG).show();
             return;
         }
-        db.deleteFolder(selectedFolderID);
-        folders.remove(Folder.findFolder(folders, selectedFolderID));
-        selectedFolderID = folders.get(0).id;
-        saveState();
-        updateLayout();
-        updateFragments();
+        if (db.deleteFolder(selectedFolderID)) {
+            folders.remove(Folder.findFolder(folders, selectedFolderID));
+            selectedFolderID = folders.get(0).id;
+            saveState();
+            updateLayout();
+            updateFragments();
+        } else {
+            Toast.makeText(this, getString(R.string.delete_folder_error2), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -312,11 +317,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 1:
-                    drinks = new DrinksFragment(activity);
+                    drinks = new DrinksFragment(activity, db);
                     return drinks;
 
                 case 2:
-                    food = new FoodFragment(activity);
+                    food = new FoodFragment(activity, db);
                     return food;
 
                 default:

@@ -2,6 +2,7 @@ package de.timbogen.whattheprice.tabs.database;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -87,12 +88,12 @@ public class NewItemActivity extends AppCompatActivity {
         item.id = db.addItem(item);
         if (item.id != -1) {
             Toast.makeText(this, getString(R.string.item_add_success), Toast.LENGTH_LONG).show();
+            setResult(Activity.RESULT_OK, null);
+            finish();
         } else {
             Toast.makeText(this, getString(R.string.item_add_error), Toast.LENGTH_LONG).show();
+            cancel(null);
         }
-
-        // Close the activity
-        finish();
     }
 
     /**
@@ -100,6 +101,7 @@ public class NewItemActivity extends AppCompatActivity {
      * @param view that was clicked
      */
     public void cancel(View view) {
+        setResult(Activity.RESULT_CANCELED, null);
         finish();
     }
 }

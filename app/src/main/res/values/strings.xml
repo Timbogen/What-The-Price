@@ -14,6 +14,7 @@
     <string name="delete_folder"> Delete current folder </string>
     <string name="delete_folder_warning"> Delete </string>
     <string name="delete_folder_error"> Cannot delete last folder! </string>
+    <string name="delete_folder_error2"> Error! Could not delete folder! </string>
 
     <!-- Tab names -->
     <string name="overview"> Overview </string>
@@ -36,7 +37,7 @@
     <string name="item_price_warning"> Price is invalid! </string>
     <string name="item_ingredients_hint"> Ingredients of the item </string>
     <string name="item_add_success"> Item was added successfully! </string>
-    <string name="item_add_error"> Error! Item was not added! Name is probably taken! </string>
+    <string name="item_add_error"> Error! Item was not added! </string>
     <string-array name="types">
         <item> Add to drinks </item>
         <item> Add to food </item>
@@ -48,5 +49,10 @@
     <string name="overview_folder_order"> Order </string>
     <string name="overview_total"> Total: </string>
     <string name="overview_euro"> Euro </string>
+
+    <!-- Item adapter -->
+    <string name="item_adapter_quantity"> Quantity: </string>
+    <string name="item_adapter_price"> Price: </string>
+    <string name="item_adapter_price_unit"> Euro </string>
 
 </resources>

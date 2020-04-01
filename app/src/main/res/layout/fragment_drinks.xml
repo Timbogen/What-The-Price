@@ -8,6 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".tabs.DrinksFragment">
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_item"
         app:layout_constraintRight_toRightOf="parent"

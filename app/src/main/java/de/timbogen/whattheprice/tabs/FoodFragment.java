@@ -6,14 +6,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
+import de.timbogen.whattheprice.MainActivity;
 import de.timbogen.whattheprice.R;
+import de.timbogen.whattheprice.tabs.database.Database;
 import de.timbogen.whattheprice.tabs.database.NewItemActivity;
+import de.timbogen.whattheprice.tabs.models.Item;
 import de.timbogen.whattheprice.tabs.models.Type;
+import de.timbogen.whattheprice.tabs.shared.ItemAdapter;
 
 public class FoodFragment extends Fragment {
+    /**
+     * The database
+     */
+    private Database db;
     /**
      * The fragment
      */
@@ -22,19 +33,50 @@ public class FoodFragment extends Fragment {
      * The active activity
      */
     private Activity activity;
+    /**
+     * The items shown in the list
+     */
+    private ArrayList<Item> items;
 
     /**
      * Constructor
      */
-    public FoodFragment(Activity activity) {
+    public FoodFragment(Activity activity, Database db) {
         this.activity = activity;
+        this.db = db;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment = inflater.inflate(R.layout.fragment_food, container, false);
-        setupLayout();
+        update();
         return fragment;
+    }
+
+    /**
+     * Method to catch results of other activities
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            update();
+        }
+    }
+
+    /**
+     * Method to update the fragment
+     */
+    public void update() {
+        loadData();
+        setupLayout();
+    }
+
+    /**
+     * Method to load the data
+     */
+    private void loadData() {
+        items = db.getItems(MainActivity.selectedFolderID, Type.FOOD.ordinal());
     }
 
     /**
@@ -48,6 +90,9 @@ public class FoodFragment extends Fragment {
                 newItem();
             }
         });
+        // Fill the list
+        ListView list = fragment.findViewById(R.id.list);
+        list.setAdapter(new ItemAdapter(activity, items));
     }
 
     /**
@@ -55,6 +100,6 @@ public class FoodFragment extends Fragment {
      */
     private void newItem() {
         NewItemActivity.type = Type.FOOD;
-        startActivity(new Intent(activity, NewItemActivity.class));
+        startActivityForResult(new Intent(activity, NewItemActivity.class), 0);
     }
 }

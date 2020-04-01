@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
         // Create the item table
         db.execSQL(
                 "CREATE TABLE IF NOT EXISTS " + ITEM_TABLE + " ( "
-                        + Item.NAME + " TEXT NOT NULL UNIQUE, "
+                        + Item.NAME + " TEXT NOT NULL, "
                         + Item.PRICE + " REAL NOT NULL, "
                         + Item.INGREDIENTS + " TEXT, "
                         + Item.TYPE + " INTEGER NOT NULL, "
@@ -108,7 +108,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Item.FOLDER_ID, item.folder_id);
 
         // Insert into the database
-        return db.insert(FOLDER_TABLE, null, values);
+        return db.insert(ITEM_TABLE, null, values);
     }
 
     /**
@@ -148,18 +148,18 @@ public class Database extends SQLiteOpenHelper {
     /**
      * Method to get all items for the corresponding folder/type
      *
-     * @param folder of the items
+     * @param folder_id of the items
      * @param type of the items
      * @return drink-items
      */
-    public ArrayList<Item> getItems(Folder folder, int type) {
+    public ArrayList<Item> getItems(long folder_id, int type) {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<Item> items = new ArrayList<>();
 
         // Create the query
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM " + ITEM_TABLE
-                        + " WHERE " + Item.FOLDER_ID + "=" + folder.id
+                        + " WHERE " + Item.FOLDER_ID + "=" + folder_id
                         + " AND " + Item.TYPE + "=" + type,
                 null
         );
@@ -178,6 +178,7 @@ public class Database extends SQLiteOpenHelper {
             item.type = cursor.getInt(cursor.getColumnIndex(Item.TYPE));
             item.folder_id = cursor.getInt(cursor.getColumnIndex(Item.FOLDER_ID));
             items.add(item);
+            cursor.moveToNext();
         }
 
         // Close the cursor

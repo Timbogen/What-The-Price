@@ -24,14 +24,18 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment = inflater.inflate(R.layout.fragment_overview, container, false);
-        setupLayout();
+        update();
         return fragment;
+    }
+
+    public void update() {
+        setupLayout();
     }
 
     /**
      * Method to setup the fragments layout
      */
-    public void setupLayout() {
+    private void setupLayout() {
         // Get the current folder
         Folder folder = MainActivity.folders.get(Folder.findFolder(MainActivity.folders, MainActivity.selectedFolderID));
         // Set the description
