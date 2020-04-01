@@ -3,13 +3,12 @@ package de.timbogen.whattheprice.tabs.database;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import de.timbogen.whattheprice.MainActivity;
+import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.R;
 import de.timbogen.whattheprice.tabs.models.Folder;
 
@@ -49,8 +48,8 @@ public class NewFolderActivity extends AppCompatActivity {
         if (folder.id != -1) {
             // Add the new item to the existing activity
             setResult(Activity.RESULT_OK, null);
-            MainActivity.folders.add(folder);
-            MainActivity.selectedFolderID = folder.id;
+            WTPActivity.folders.add(folder);
+            WTPActivity.selectedFolderID = folder.id;
             Toast.makeText(this, getString(R.string.folder_add_success), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, getString(R.string.folder_add_error), Toast.LENGTH_LONG).show();

@@ -1,6 +1,5 @@
 package de.timbogen.whattheprice.tabs.shared;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,15 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import de.timbogen.whattheprice.R;
+import de.timbogen.whattheprice.WTPActivity;
+import de.timbogen.whattheprice.tabs.database.Database;
 import de.timbogen.whattheprice.tabs.models.Item;
 
 public class ItemAdapter extends ArrayAdapter<Item> {
+    /**
+     * The database
+     */
+    private Database db;
     /**
      * The items of the list
      */
@@ -25,15 +30,16 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     /**
      * The active context
      */
-    private Activity activity;
+    private WTPActivity activity;
 
     /**
      * Constructor
      */
-    public ItemAdapter(@NonNull Activity activity, ArrayList<Item> items) {
+    public ItemAdapter(@NonNull WTPActivity activity, ArrayList<Item> items, Database db) {
         super(activity, 0, items);
         this.activity = activity;
         this.items = items;
+        this.db = db;
     }
 
     @NonNull
@@ -63,14 +69,79 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Set the item
-                ItemDetailActivity.item = items.get(position);
-                // Start the activity for result
-                activity.startActivityForResult(new Intent(activity, ItemDetailActivity.class), 0);
+                showInfo(items.get(position));
+            }
+        });
+
+        // Set the on click method for add button
+        ImageView increase = item.findViewById(R.id.increase);
+        increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                increaseQuantity(items.get(position));
+            }
+        });
+
+        // Set the on click method for add button
+        ImageView decrease = item.findViewById(R.id.decrease);
+        decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decreaseQuantity(items.get(position));
             }
         });
 
         // Return the modified item
         return item;
+    }
+
+    /**
+     * Method to show the detailed info for one item
+     *
+     * @param item to show info for
+     */
+    private void showInfo(Item item) {
+        // Set the item
+        ItemDetailActivity.item = item;
+        // Start the activity for result
+        activity.startActivityForResult(new Intent(activity, ItemDetailActivity.class), 0);
+    }
+
+    /**
+     * Method to increase the quantity of an item
+     * @param item to be increased
+     */
+    private void increaseQuantity(Item item) {
+        // Increase
+        item.quantity++;
+        // Check if item has to be added to the order
+        if (item.quantity == 1) {
+            WTPActivity.order.add(item);
+        }
+        // Update the item
+        db.updateItem(item);
+        // Refresh the fragments
+        activity.updateFragments(false);
+    }
+
+    /**
+     * Method to decrease the quantity of an item
+     * @param item to be decreased
+     */
+    private void decreaseQuantity(Item item) {
+        // Check if item is already at min
+        if (item.quantity == 0) {
+            return;
+        }
+        // Decrease
+        item.quantity--;
+        // Check if item has to be removed from the order
+        if (item.quantity == 0) {
+            WTPActivity.order.remove(item);
+        }
+        // Update the item
+        db.updateItem(item);
+        // Refresh the fragments
+        activity.updateFragments(false);
     }
 }

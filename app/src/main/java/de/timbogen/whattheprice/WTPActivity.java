@@ -34,7 +34,7 @@ import de.timbogen.whattheprice.tabs.models.Folder;
 import de.timbogen.whattheprice.tabs.models.Item;
 import de.timbogen.whattheprice.tabs.models.Type;
 
-public class MainActivity extends AppCompatActivity {
+public class WTPActivity extends AppCompatActivity {
     /**
      * The key of the shared pref
      */
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The current order
      */
-    public static ArrayList<Item> order;
+    public static ArrayList<Item> order = new ArrayList<>();
     /**
      * The database
      */
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_wtp);
 
         // Load data
         restoreState();
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             saveState();
             updateLayout();
-            updateFragments();
+            clearOrder(false);
         }
     }
 
@@ -177,11 +177,13 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method to update the fragments
+     *
+     * @param reload true if data should also be reloaded
      */
-    private void updateFragments() {
+    public void updateFragments(boolean reload) {
         overview.update();
-        drinks.update();
-        food.update();
+        drinks.update(reload);
+        food.update(reload);
     }
 
     /**
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 // Get the id
                 selectedFolderID = folders.get(position).id;
                 saveState();
-                updateFragments();
+                clearOrder(false);
             }
 
             @Override
@@ -228,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.clear_order:
-                clearOrder();
+                clearOrder(true);
                 return true;
 
             default:
@@ -256,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             selectedFolderID = folders.get(0).id;
             saveState();
             updateLayout();
-            updateFragments();
+            clearOrder(false);
         } else {
             Toast.makeText(this, getString(R.string.delete_folder_error2), Toast.LENGTH_SHORT).show();
         }
@@ -264,9 +266,20 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method to clear the current order
+     *
+     * @param fullClear true if order should be completely cleared
      */
-    private void clearOrder() {
-
+    public void clearOrder(boolean fullClear) {
+        if (fullClear) {
+            // Reset the quantities
+            for (Item item: order) {
+                item.quantity = 0;
+            }
+        }
+        // Empty the order
+        order.clear();
+        // Update fragments
+        updateFragments(true);
     }
 
     /**
@@ -287,14 +300,14 @@ public class MainActivity extends AppCompatActivity {
         /**
          * The current activity
          */
-        private Activity activity;
+        private WTPActivity activity;
 
         /**
          * Constructor
          *
          * @param fm the fragment manager
          */
-        private PagerAdapter(@NonNull FragmentManager fm, Activity activity) {
+        private PagerAdapter(@NonNull FragmentManager fm, WTPActivity activity) {
             super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.activity = activity;
         }
@@ -325,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
                     return food;
 
                 default:
-                    overview = new OverviewFragment();
+                    overview = new OverviewFragment(activity, db);
                     return overview;
             }
         }

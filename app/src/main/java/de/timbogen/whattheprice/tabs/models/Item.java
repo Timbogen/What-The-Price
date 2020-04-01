@@ -14,6 +14,7 @@ public class Item {
     public static String INGREDIENTS = "ingredients";
     public static String TYPE = "type";
     public static String FOLDER_ID = "folder_id";
+    public static String QUANTITY = "quantity";
     /**
      * Id of the folder
      */
@@ -72,6 +73,7 @@ public class Item {
                 + "Ingredients: " + ingredients + "\n"
                 + "Type       : " + type + "\n"
                 + "Folder ID  : " + folder_id + "\n"
+                + "Quantity   : " + quantity + "\n"
                 + "========================\n";
     }
 }

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-import de.timbogen.whattheprice.MainActivity;
+import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.R;
 import de.timbogen.whattheprice.tabs.database.Database;
 import de.timbogen.whattheprice.tabs.database.NewItemActivity;
@@ -32,7 +32,7 @@ public class ItemsFragment extends Fragment {
     /**
      * The active activity
      */
-    private Activity activity;
+    private WTPActivity activity;
     /**
      * The items shown in the list
      */
@@ -45,7 +45,7 @@ public class ItemsFragment extends Fragment {
     /**
      * Constructor
      */
-    public ItemsFragment(Activity activity, Database db, Type type) {
+    public ItemsFragment(WTPActivity activity, Database db, Type type) {
         this.activity = activity;
         this.db = db;
         this.type = type;
@@ -54,7 +54,7 @@ public class ItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment =  inflater.inflate(R.layout.fragment_items, container, false);
-        update();
+        update(true);
         return fragment;
     }
 
@@ -65,15 +65,19 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            update();
+            update(true);
         }
     }
 
     /**
      * Method to update the fragment
+     *
+     * @param reload true if data should also be reloaded
      */
-    public void update() {
-        loadData();
+    public void update(boolean reload) {
+        if (reload) {
+            loadData();
+        }
         setupLayout();
     }
 
@@ -81,7 +85,7 @@ public class ItemsFragment extends Fragment {
      * Method to load the data
      */
     private void loadData() {
-        items = db.getItems(MainActivity.selectedFolderID, type.ordinal());
+        items = db.getItems(WTPActivity.selectedFolderID, type.ordinal());
     }
 
     /**
@@ -95,9 +99,10 @@ public class ItemsFragment extends Fragment {
                 newItem();
             }
         });
+
         // Fill the list
         ListView list = fragment.findViewById(R.id.list);
-        list.setAdapter(new ItemAdapter(activity, items));
+        list.setAdapter(new ItemAdapter(activity, items, db));
     }
 
     /**

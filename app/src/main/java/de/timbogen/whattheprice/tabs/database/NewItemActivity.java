@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import de.timbogen.whattheprice.MainActivity;
+import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.R;
 import de.timbogen.whattheprice.tabs.models.Item;
 import de.timbogen.whattheprice.tabs.models.Type;
@@ -84,7 +84,7 @@ public class NewItemActivity extends AppCompatActivity {
 
         // Add the item
         Item item = new Item(name.getText().toString(), Double.parseDouble(price.getText().toString()),
-                ingredients.getText().toString(), type.ordinal(), MainActivity.selectedFolderID);
+                ingredients.getText().toString(), type.ordinal(), WTPActivity.selectedFolderID);
         item.id = db.addItem(item);
         if (item.id != -1) {
             Toast.makeText(this, getString(R.string.item_add_success), Toast.LENGTH_LONG).show();

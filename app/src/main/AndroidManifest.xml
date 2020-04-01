@@ -13,7 +13,7 @@
         <activity android:name=".tabs.shared.ItemDetailActivity" />
         <activity android:name=".tabs.database.NewFolderActivity" />
         <activity android:name=".tabs.database.NewItemActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".WTPActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

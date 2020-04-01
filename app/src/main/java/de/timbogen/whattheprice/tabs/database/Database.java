@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.tabs.models.Folder;
 import de.timbogen.whattheprice.tabs.models.Item;
 
@@ -60,6 +61,7 @@ public class Database extends SQLiteOpenHelper {
                         + Item.INGREDIENTS + " TEXT, "
                         + Item.TYPE + " INTEGER NOT NULL, "
                         + Item.FOLDER_ID + " INTEGER NOT NULL, "
+                        + Item.QUANTITY + " INTEGER NOT NULL, "
                         + ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL "
                         + " ) "
         );
@@ -106,6 +108,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(Item.INGREDIENTS, item.ingredients);
         values.put(Item.TYPE, item.type);
         values.put(Item.FOLDER_ID, item.folder_id);
+        values.put(Item.QUANTITY, item.quantity);
 
         // Insert into the database
         return db.insert(ITEM_TABLE, null, values);
@@ -170,6 +173,7 @@ public class Database extends SQLiteOpenHelper {
         }
         // Extract the data
         while (!cursor.isAfterLast()) {
+            // Get the item data
             Item item = new Item();
             item.id = cursor.getLong(cursor.getColumnIndex(ID));
             item.name = cursor.getString(cursor.getColumnIndex(Item.NAME));
@@ -177,13 +181,41 @@ public class Database extends SQLiteOpenHelper {
             item.ingredients = cursor.getString(cursor.getColumnIndex(Item.INGREDIENTS));
             item.type = cursor.getInt(cursor.getColumnIndex(Item.TYPE));
             item.folder_id = cursor.getInt(cursor.getColumnIndex(Item.FOLDER_ID));
+            item.quantity = cursor.getInt(cursor.getColumnIndex(Item.QUANTITY));
             items.add(item);
+
+            // Check if the item should be in the order
+            if (item.quantity > 0) {
+                WTPActivity.order.add(item);
+            }
+            // Prepare the next item
             cursor.moveToNext();
         }
 
         // Close the cursor
         cursor.close();
         return items;
+    }
+
+    /**
+     * Method to update an item
+     *
+     * @param item to be updated
+     */
+    public void updateItem(Item item) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        // Create the value pairs
+        ContentValues values = new ContentValues();
+        values.put(Item.NAME, item.name);
+        values.put(Item.PRICE, item.price);
+        values.put(Item.INGREDIENTS, item.ingredients);
+        values.put(Item.TYPE, item.type);
+        values.put(Item.FOLDER_ID, item.folder_id);
+        values.put(Item.QUANTITY, item.quantity);
+
+        // Insert into the database
+        db.update(ITEM_TABLE, values, ID + "=" + item.id, null);
     }
 
     /**
