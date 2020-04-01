@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/spinner_folders"
+        android:title="@string/folder_spinner"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/manage_folders"
+        android:title="@string/manage_folders"
+        app:showAsAction="never">
+
+        <menu>
+
+            <item
+                android:id="@+id/add_folder"
+                android:title="@string/add_folder"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/delete_folder"
+                android:title="@string/delete_folder"
+                app:showAsAction="never">
+
+                <menu>
+
+                    <item
+                        android:id="@+id/delete_folder_finally"
+                        android:title="@string/delete_folder_warning"
+                        app:showAsAction="never" />
+
+                </menu>
+
+            </item>
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/clear_order"
+        android:title="@string/clear_order"
+        app:showAsAction="never" />
+
+</menu>

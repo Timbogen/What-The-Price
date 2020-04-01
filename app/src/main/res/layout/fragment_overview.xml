@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".tabs.OverviewFragment">
+
+    <TextView
+        android:id="@+id/folder_description_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overview_folder_description"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/folder_description_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/folder_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/folder_description_title" />
+
+    <TextView
+        android:id="@+id/folder_order_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overview_folder_order"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/folder_description" />
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/folder_order_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <ListView
+        android:id="@+id/overview_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/folder_order_title"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/overview_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overview_folder_order"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/folder_description" />
+
+    <TextView
+        android:id="@+id/overview_euro"
+        app:layout_constraintTop_toBottomOf="@id/overview_list"
+        android:textSize="16sp"
+        android:layout_margin="16dp"
+        android:text="@string/overview_euro"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/overview_total"
+        app:layout_constraintTop_toBottomOf="@id/overview_list"
+        android:textSize="16sp"
+        android:layout_margin="16dp"
+        app:layout_constraintRight_toLeftOf="@id/overview_euro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/overview_total_title"
+        app:layout_constraintTop_toBottomOf="@id/overview_list"
+        android:textSize="16sp"
+        android:layout_margin="16dp"
+        android:text="@string/overview_total"
+        app:layout_constraintRight_toLeftOf="@id/overview_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

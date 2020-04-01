@@ -2,10 +2,49 @@
 
     <!-- App name -->
     <string name="app_name">What The Price</string>
+    <string name="image"> Image </string>
+
+    <!-- Menu -->
+    <string name="folder_spinner"> Folder Spinner </string>
+    <string name="clear_order"> Clear current order </string>
+    <string name="manage_folders"> Manage folders </string>
+    <string name="add_folder"> Add folder </string>
+    <string name="delete_folder"> Delete current folder </string>
+    <string name="delete_folder_warning"> Delete </string>
+    <string name="delete_folder_error"> Cannot delete last folder! </string>
 
     <!-- Tab names -->
-    <string name="order"> Order </string>
+    <string name="overview"> Overview </string>
     <string name="drinks"> Drinks </string>
     <string name="food"> Food </string>
+
+    <!-- New folder activity -->
+    <string name="new_folder_title"> Add a new folder </string>
+    <string name="folder_name_hint"> Name of the folder </string>
+    <string name="folder_name_warning"> Missing name! </string>
+    <string name="folder_description_hint"> Description of the folder </string>
+    <string name="folder_add_success"> Folder was added successfully! </string>
+    <string name="folder_add_error"> Error! Folder was not added! Name is probably taken! </string>
+
+    <!-- New item activity -->
+    <string name="new_item_title"> Add a new item </string>
+    <string name="item_name_hint"> Name of the item </string>
+    <string name="item_name_warning"> Missing name! </string>
+    <string name="item_price_hint"> Price of the item </string>
+    <string name="item_price_warning"> Price is invalid! </string>
+    <string name="item_ingredients_hint"> Ingredients of the item </string>
+    <string name="item_add_success"> Item was added successfully! </string>
+    <string name="item_add_error"> Error! Item was not added! Name is probably taken! </string>
+    <string-array name="types">
+        <item> Add to drinks </item>
+        <item> Add to food </item>
+    </string-array>
+
+    <!-- Overview fragment -->
+    <string name="overview_folder_description"> Description </string>
+    <string name="overview_no_description"> No description </string>
+    <string name="overview_folder_order"> Order </string>
+    <string name="overview_total"> Total: </string>
+    <string name="overview_euro"> Euro </string>
 
 </resources>
