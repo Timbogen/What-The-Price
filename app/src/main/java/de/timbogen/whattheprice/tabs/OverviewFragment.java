@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import de.timbogen.whattheprice.WTPActivity;
 import de.timbogen.whattheprice.R;
@@ -32,6 +34,10 @@ public class OverviewFragment extends Fragment {
      * The current activity
      */
     private WTPActivity activity;
+    /**
+     * The adapter for the list
+     */
+    private ItemAdapter adapter;
 
     /**
      * Constructor
@@ -47,8 +53,19 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment = inflater.inflate(R.layout.fragment_overview, container, false);
+        setupLayout();
         update();
         return fragment;
+    }
+
+    /**
+     * Method to setup the layout
+     */
+    private void setupLayout() {
+        // Fill the list
+        ListView list = fragment.findViewById(R.id.list);
+        adapter = new ItemAdapter(activity, WTPActivity.order, db);
+        list.setAdapter(adapter);
     }
 
     /**
@@ -65,9 +82,14 @@ public class OverviewFragment extends Fragment {
             description.setText(folder.description);
         }
 
-        // Fill the list
-        ListView list = fragment.findViewById(R.id.list);
-        list.setAdapter(new ItemAdapter(activity, WTPActivity.order, db));
+        // Sort the items and update the list
+        Collections.sort(WTPActivity.order, new Comparator<Item>() {
+            @Override
+            public int compare(Item a, Item b) {
+                return a.name.compareToIgnoreCase(b.name);
+            }
+        });
+        adapter.notifyDataSetChanged();
 
         // Set the price
         double price = 0;
