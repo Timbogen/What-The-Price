@@ -11,6 +11,7 @@
     <string name="clear_order"> Clear current order </string>
     <string name="manage_folders"> Manage folders </string>
     <string name="add_folder"> Add folder </string>
+    <string name="share_folder"> Share folder </string>
     <string name="delete_folder"> Delete current folder </string>
     <string name="delete_folder_warning"> Delete </string>
     <string name="delete_folder_error"> Cannot delete last folder! </string>

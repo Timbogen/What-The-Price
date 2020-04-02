@@ -52,6 +52,10 @@ public class ItemsFragment extends Fragment {
      * The adapter for the list
      */
     private ItemAdapter adapter;
+    /**
+     * The warning view
+     */
+    private View warning;
 
     /**
      * Constructor
@@ -115,6 +119,9 @@ public class ItemsFragment extends Fragment {
         ListView list = fragment.findViewById(R.id.list);
         adapter = new ItemAdapter(activity, items, db);
         list.setAdapter(adapter);
+
+        // Get the warning view
+        warning = fragment.findViewById(R.id.no_items);
     }
 
     /**
@@ -146,9 +153,9 @@ public class ItemsFragment extends Fragment {
         // Filter the items and check if no items hint should be visible
         applyFilter();
         if (items.size() == 0) {
-            fragment.findViewById(R.id.no_items).setVisibility(View.VISIBLE);
+            warning.setVisibility(View.VISIBLE);
         } else {
-            fragment.findViewById(R.id.no_items).setVisibility(View.GONE);
+            warning.setVisibility(View.GONE);
         }
 
         // Refresh the list
