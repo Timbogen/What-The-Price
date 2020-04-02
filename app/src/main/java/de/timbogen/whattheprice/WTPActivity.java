@@ -12,6 +12,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -242,6 +245,10 @@ public class WTPActivity extends AppCompatActivity {
                 addFolder();
                 return true;
 
+            case R.id.share_folder:
+                shareFolder();
+                return true;
+
             case R.id.delete_folder_finally:
                 deleteFolder();
                 return true;
@@ -261,6 +268,29 @@ public class WTPActivity extends AppCompatActivity {
      */
     private void addFolder() {
         startActivityForResult(new Intent(this, NewFolderActivity.class), 0);
+    }
+
+    /**
+     * Method to share a folder
+     */
+    private void shareFolder() {
+        try {
+
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+
+            getPackageManager().getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            waIntent.setPackage("com.whatsapp");
+            Gson gson = new Gson();
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, gson.toJson(drinks));
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
     }
 
     /**

@@ -16,6 +16,11 @@
                 app:showAsAction="never" />
 
             <item
+                android:id="@+id/share_folder"
+                android:title="@string/share_folder"
+                app:showAsAction="never" />
+
+            <item
                 android:id="@+id/delete_folder"
                 android:title="@string/delete_folder"
                 app:showAsAction="never">
