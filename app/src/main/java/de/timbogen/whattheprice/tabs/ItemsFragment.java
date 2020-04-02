@@ -3,9 +3,12 @@ package de.timbogen.whattheprice.tabs;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +40,18 @@ public class ItemsFragment extends Fragment {
      * The type of item
      */
     private Type type;
+    /**
+     * The filtered list of items
+     */
+    private ArrayList<Item> items = new ArrayList<>();
+    /**
+     * The filter for the list
+     */
+    private String filter = "";
+    /**
+     * The adapter of the list
+     */
+    private ItemAdapter adapter;
 
     /**
      * Constructor
@@ -50,6 +65,7 @@ public class ItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment =  inflater.inflate(R.layout.fragment_items, container, false);
+        setupFilter();
         update();
         return fragment;
     }
@@ -66,9 +82,55 @@ public class ItemsFragment extends Fragment {
     }
 
     /**
+     * Method to setup the filter
+     */
+    private void setupFilter() {
+        EditText search = fragment.findViewById(R.id.search);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter = s.toString();
+                applyFilter();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    /**
+     * Method to filter the items
+     */
+    private void applyFilter() {
+        // Refill the items
+        items.clear();
+        items.addAll(type == Type.DRINK ? activity.drinks : activity.food);
+
+        // Check if filter is empty
+        if (filter.equals("")) {
+            return;
+        }
+
+        // Filter the list
+        for (int index = 0; index < items.size(); index++) {
+            if (!items.get(index).name.toLowerCase().contains(filter.toLowerCase())) {
+                items.remove(items.get(index));
+                index--;
+            }
+        }
+    }
+
+    /**
      * Method to update the fragment
      */
     public void update() {
+
         // Add an action to the add button
         fragment.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +141,9 @@ public class ItemsFragment extends Fragment {
 
         // Fill the list
         ListView list = fragment.findViewById(R.id.list);
-        ArrayList<Item> items = type == Type.DRINK ? activity.drinks : activity.food;
-        list.setAdapter(new ItemAdapter(activity, items, db));
+        applyFilter();
+        adapter = new ItemAdapter(activity, items, db);
+        list.setAdapter(adapter);
     }
 
     /**

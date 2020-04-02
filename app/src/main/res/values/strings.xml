@@ -60,6 +60,9 @@
     <string name="overview_total"> Total: </string>
     <string name="overview_euro"> € </string>
 
+    <!-- Item fragment -->
+    <string name="items_search"> Search </string>
+
     <!-- Item adapter -->
     <string name="item_adapter_quantity"> Quantity: </string>
     <string name="item_adapter_price"> Price: </string>
