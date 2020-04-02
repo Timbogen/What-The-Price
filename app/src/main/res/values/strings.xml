@@ -62,6 +62,7 @@
 
     <!-- Item fragment -->
     <string name="items_search"> Search </string>
+    <string name="items_no_items"> No items found! </string>
 
     <!-- Item adapter -->
     <string name="item_adapter_quantity"> Quantity: </string>

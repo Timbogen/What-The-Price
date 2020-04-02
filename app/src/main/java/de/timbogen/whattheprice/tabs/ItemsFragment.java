@@ -49,7 +49,7 @@ public class ItemsFragment extends Fragment {
      */
     private String filter = "";
     /**
-     * The adapter of the list
+     * The adapter for the list
      */
     private ItemAdapter adapter;
 
@@ -65,7 +65,7 @@ public class ItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         fragment =  inflater.inflate(R.layout.fragment_items, container, false);
-        setupFilter();
+        setupLayout();
         update();
         return fragment;
     }
@@ -82,9 +82,10 @@ public class ItemsFragment extends Fragment {
     }
 
     /**
-     * Method to setup the filter
+     * Method to setup the layout
      */
-    private void setupFilter() {
+    private void setupLayout() {
+        // Setup the text watcher for the search bar
         EditText search = fragment.findViewById(R.id.search);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,14 +95,26 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filter = s.toString();
-                applyFilter();
-                adapter.notifyDataSetChanged();
+                update();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+
+        // Add an action to the add button
+        fragment.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newItem();
+            }
+        });
+
+        // Fill the list
+        ListView list = fragment.findViewById(R.id.list);
+        adapter = new ItemAdapter(activity, items, db);
+        list.setAdapter(adapter);
     }
 
     /**
@@ -130,20 +143,16 @@ public class ItemsFragment extends Fragment {
      * Method to update the fragment
      */
     public void update() {
-
-        // Add an action to the add button
-        fragment.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newItem();
-            }
-        });
-
-        // Fill the list
-        ListView list = fragment.findViewById(R.id.list);
+        // Filter the items and check if no items hint should be visible
         applyFilter();
-        adapter = new ItemAdapter(activity, items, db);
-        list.setAdapter(adapter);
+        if (items.size() == 0) {
+            fragment.findViewById(R.id.no_items).setVisibility(View.VISIBLE);
+        } else {
+            fragment.findViewById(R.id.no_items).setVisibility(View.GONE);
+        }
+
+        // Refresh the list
+        adapter.notifyDataSetChanged();
     }
 
     /**
