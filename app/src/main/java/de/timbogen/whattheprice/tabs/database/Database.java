@@ -126,7 +126,7 @@ public class Database extends SQLiteOpenHelper {
         // Create the query
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM " + FOLDER_TABLE
-                        + " ORDER BY " + Folder.NAME + " ASC",
+                        + " ORDER BY " + Folder.NAME + " COLLATE NOCASE ASC",
                 null
         );
 
@@ -168,7 +168,7 @@ public class Database extends SQLiteOpenHelper {
                 "SELECT * FROM " + ITEM_TABLE
                         + " WHERE " + Item.FOLDER_ID + "=" + folder_id
                         + " AND " + Item.TYPE + "=" + type
-                        + " ORDER BY " + Item.NAME + " ASC",
+                        + " ORDER BY " + Item.NAME + " COLLATE NOCASE ASC",
                 null
         );
 
