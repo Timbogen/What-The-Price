@@ -14,6 +14,7 @@
         android:background="@drawable/toolbar_shadow"/>
 
     <ImageView
+        android:id="@+id/clear"
         android:layout_margin="16dp"
         android:contentDescription="@string/image"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -25,12 +26,14 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/clear"
+        app:layout_constraintRight_toLeftOf="@id/delete_folder"
         app:layout_constraintTop_toTopOf="@id/delete_folder"
         app:layout_constraintBottom_toBottomOf="@id/delete_folder" />
 

@@ -20,10 +20,14 @@
         android:textColor="#000000"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/decrease"
-        android:layout_width="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/info"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 
     <TextView
