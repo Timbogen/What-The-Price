@@ -61,7 +61,7 @@
 
     <!-- Overview fragment -->
     <string name="overview_folder_description"> Description </string>
-    <string name="overview_no_description"> No description </string>
+    <string name="overview_no_description">No description given.</string>
     <string name="overview_folder_order"> Order </string>
     <string name="overview_total"> Total: </string>
     <string name="overview_euro"> € </string>
