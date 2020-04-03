@@ -61,7 +61,7 @@ public class NewFolderActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
             if (cursor != null) {
                 cursor.moveToFirst();
-                name.setText(cursor.getString(0).split(".")[0]);
+                name.setText(cursor.getString(0).split(".swtp")[0]);
                 cursor.close();
             }
 
