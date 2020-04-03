@@ -12,6 +12,8 @@
     <string name="manage_folders"> Manage folders </string>
     <string name="add_folder"> Add folder </string>
     <string name="share_folder"> Share folder </string>
+    <string name="share_folder_error"> Error! WhatsApp is not installed! </string>
+    <string name="share_folder_message"> Hello! Click here to import the shared folder: </string>
     <string name="delete_folder"> Delete current folder </string>
     <string name="delete_folder_warning"> Delete </string>
     <string name="delete_folder_error"> Cannot delete last folder! </string>
@@ -26,9 +28,12 @@
     <string name="new_folder_title"> Add a new folder </string>
     <string name="folder_name_hint"> Name of the folder </string>
     <string name="folder_name_warning"> Missing name! </string>
+    <string name="folder_name_warning2"> Name should not contain \'.\'! </string>
     <string name="folder_description_hint"> Description of the folder </string>
     <string name="folder_add_success"> Folder was added successfully! </string>
     <string name="folder_add_error"> Error! Folder was not added! Name is probably taken! </string>
+    <string name="folder_import_success"> Folder was imported successfully! </string>
+    <string name="folder_import_warning"> Folder was imported with problems! </string>
 
     <!-- New item activity -->
     <string name="new_item_title"> Add a new item </string>

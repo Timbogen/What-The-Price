@@ -3,6 +3,7 @@ package de.timbogen.whattheprice;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,7 +13,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,6 +27,10 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.timbogen.whattheprice.tabs.ItemsFragment;
@@ -100,6 +104,14 @@ public class WTPActivity extends AppCompatActivity {
         setupToolbar();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Reload the folders and update the layout
+        folders = db.getFolders();
+        updateLayout();
+    }
+
     /**
      * Method to setup the toolbar
      */
@@ -127,7 +139,7 @@ public class WTPActivity extends AppCompatActivity {
     /**
      * Method to save the app state
      */
-    private void saveState() {
+    public void saveState() {
         // Save the id of the selected folder
         SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -275,20 +287,36 @@ public class WTPActivity extends AppCompatActivity {
      */
     private void shareFolder() {
         try {
-
-            Intent waIntent = new Intent(Intent.ACTION_SEND);
-            waIntent.setType("text/plain");
-
+            // Create the intent
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/*");
             getPackageManager().getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-            waIntent.setPackage("com.whatsapp");
-            Gson gson = new Gson();
-
-            waIntent.putExtra(Intent.EXTRA_TEXT, gson.toJson(drinks));
-            startActivity(Intent.createChooser(waIntent, "Share with"));
+            intent.setPackage("com.whatsapp");
+            try {
+                // Create output stream
+                Gson gson = new Gson();
+                File file = new File(getApplicationContext().getFilesDir().getPath() + "/"
+                        + folders.get(Folder.findFolder(folders, selectedFolderID)).name + ".swtp");
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                // Write json object into the file
+                ArrayList<Item> items = new ArrayList<>(drinks);
+                items.addAll(food);
+                bw.write( gson.toJson(items));
+                bw.close();
+                // Add the message
+                intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                        this,
+                        "de.timbogen.whattheprice.fileprovider",
+                        file
+                ));
+                // Start the activity
+                startActivity(Intent.createChooser(intent, "share file with"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(this, getString(R.string.share_folder_error), Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/text_ingredients"
+        android:id="@+id/text_description"
         android:inputType="none"
         android:layout_margin="16dp"
         android:hint="@string/folder_description_hint"
