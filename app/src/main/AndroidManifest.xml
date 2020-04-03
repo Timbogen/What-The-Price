@@ -4,11 +4,6 @@
     android:authorities="com.whatsapp"
     package="de.timbogen.whattheprice">
 
-    <!-- Permissions -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -28,8 +23,14 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".tabs.shared.ItemDetailActivity" />
-        <activity android:name=".tabs.database.NewFolderActivity">
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".tabs.shared.ItemDetailActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".tabs.database.NewFolderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -49,8 +50,14 @@
                     tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
-        <activity android:name=".tabs.database.NewItemActivity" />
-        <activity android:name=".WTPActivity">
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".tabs.database.NewItemActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".WTPActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
