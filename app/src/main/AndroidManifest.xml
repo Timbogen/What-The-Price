@@ -24,12 +24,12 @@
         </provider>
 
         <activity
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".tabs.shared.ItemDetailActivity" />
         <activity
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".tabs.database.NewFolderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -51,12 +51,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".tabs.database.NewItemActivity" />
         <activity
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".WTPActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
